@@ -25,7 +25,6 @@ type BigBoy struct {
 
 type ChatEchoBot struct {
 	onion    string
-    clientonion string
 	rai      *application.ApplicationInstance
     bigboy   *BigBoy
 }
@@ -47,13 +46,18 @@ func (bot *ChatEchoBot) OpenInbound() {
 
 func (bot *ChatEchoBot) ChatMessage(messageID uint32, when time.Time, message string) bool {
 	log.Printf("ChatMessage(from: %v, %v", bot.rai.RemoteHostname, message)
-    message = bot.clientonion + ": " + message
-    for _, otherbot := range bot.bigboy.bots {
+    message = bot.rai.RemoteHostname + ": " + message
+    MessageEveryone(bot.bigboy, bot, message)
+	return true
+}
+
+// set "bot" to nil if it should go to everyone
+func MessageEveryone(bigboy *BigBoy, bot *ChatEchoBot, message string) {
+    for _, otherbot := range bigboy.bots {
         if otherbot != bot {
             SendMessage(otherbot.rai, message)
         }
     }
-	return true
 }
 
 func SendMessage(rai *application.ApplicationInstance, message string) {
@@ -117,7 +121,7 @@ func main() {
 	af.AddHandler("im.ricochet.chat", func(rai *application.ApplicationInstance) func() channels.Handler {
 		return func() channels.Handler {
 			chat := new(channels.ChatChannel)
-			thisbot := &ChatEchoBot{rai: rai, clientonion: "foo", onion: aliceAddr, bigboy: bigboy}
+			thisbot := &ChatEchoBot{rai: rai, onion: aliceAddr, bigboy: bigboy}
 			chat.Handler = thisbot
             bigboy.bots = append(bigboy.bots, thisbot)
 			return chat
