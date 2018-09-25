@@ -9,22 +9,11 @@ import (
   "fmt"
 )
 
-type Message struct {
-	From, To string
-	Message  string
-}
-
-type MessageStack interface {
-	Add(from, to, message string)
-	Get() []Message
-}
-
 type BigBoy struct {
     bots []*ChatEchoBot
 }
 
 type ChatEchoBot struct {
-	onion    string
 	rai      *application.ApplicationInstance
     bigboy   *BigBoy
 }
@@ -121,7 +110,7 @@ func main() {
 	af.AddHandler("im.ricochet.chat", func(rai *application.ApplicationInstance) func() channels.Handler {
 		return func() channels.Handler {
 			chat := new(channels.ChatChannel)
-			thisbot := &ChatEchoBot{rai: rai, onion: aliceAddr, bigboy: bigboy}
+			thisbot := &ChatEchoBot{rai: rai, bigboy: bigboy}
 			chat.Handler = thisbot
             bigboy.bots = append(bigboy.bots, thisbot)
 			return chat
