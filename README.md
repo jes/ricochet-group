@@ -18,7 +18,6 @@ Still to implement:
 
 Commands we might still want to implement:
  /whois jes    - given Ricochet ID of given nickname
- /nick jes     - set nickname for client
  /welcome      - show the current welcome message
 
 admin commands:
