@@ -8,6 +8,9 @@ import (
 	"strings"
 )
 
+var ricochet2Nick map[string]string
+var nick2Ricochet map[string]string
+
 // avoidPeer can be nil to send a message to everyone
 func SendToAll(bot *ricochetbot.RicochetBot, avoidPeer *ricochetbot.Peer, message string) {
 	for _, p := range bot.Peers {
@@ -16,9 +19,6 @@ func SendToAll(bot *ricochetbot.RicochetBot, avoidPeer *ricochetbot.Peer, messag
 		}
 	}
 }
-
-var ricochet2Nick map[string]string
-var nick2Ricochet map[string]string
 
 func main() {
 	pk, err := utils.LoadPrivateKeyFromFile("./private_key")
