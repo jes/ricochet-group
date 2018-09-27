@@ -5,6 +5,7 @@ import (
 	"github.com/jes/go-ricochet/utils"
 	"github.com/jes/ricochetbot"
 	"log"
+	"strings"
 )
 
 // avoidPeer can be nil to send a message to everyone
@@ -22,6 +23,8 @@ func main() {
 		log.Fatalf("error reading private key file: %v", err)
 	}
 
+	commands := InitCommands()
+
 	bot := new(ricochetbot.RicochetBot)
 	bot.PrivateKey = pk
 
@@ -38,8 +41,18 @@ func main() {
 		peer.SendMessage("*** welcome to ricochet group chat.")
 	}
 	bot.OnMessage = func(peer *ricochetbot.Peer, message string) {
-		message = "<" + peer.Onion + "> " + message
-		SendToAll(bot, peer, message)
+		if message[0] == '/' {
+			words := strings.Fields(message)
+			cmd, exists := commands[words[0]]
+			if exists {
+				cmd(peer, message, words)
+			} else {
+				peer.SendMessage("*** unrecognised command: " + words[0])
+			}
+		} else {
+			message = "<" + peer.Onion + "> " + message
+			SendToAll(bot, peer, message)
+		}
 	}
 	bot.OnContactRequest = func(peer *ricochetbot.Peer, name string, desc string) bool {
 		fmt.Println(peer.Onion, "wants to be our friend")

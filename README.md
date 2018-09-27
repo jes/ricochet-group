@@ -12,14 +12,14 @@ Still to implement:
  - config file
  - peer tracking, so it can automatically connect to peers on startup
  - automatically generate a private key
- - some "command" system, so you can go "/whois jes" to find out the Ricochet ID belonging to the user with nickname "jes", or "/who" to get a list of connected peers
+ - different welcome message based on whether it's a new peer or not? (i.e. to tell them to set a nick with /nick)
+ - write to stderr some indication of when the bot is ready to connect to, instead of just waiting?
+ - stop replies to commands from appearing in the GUI *before* the commands themselves - not sure why this is happening, maybe add 1 second to our message timestamps?
 
-Commands we might want:
- /who          - list connected peers
+Commands we might still want to implement:
  /whois jes    - given Ricochet ID of given nickname
  /nick jes     - set nickname for client
  /welcome      - show the current welcome message
- /help         - explain what commands are available
 
 admin commands:
  /invite $id   - invite given ricochet id to the chat (i.e. group chat should connect to that id and send a contactrequest)
