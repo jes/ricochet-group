@@ -17,7 +17,6 @@ Still to implement:
  - stop replies to commands from appearing in the GUI *before* the commands themselves - not sure why this is happening, maybe add 1 second to our message timestamps?
 
 Commands we might still want to implement:
- /whois jes    - given Ricochet ID of given nickname
  /welcome      - show the current welcome message
 
 admin commands:

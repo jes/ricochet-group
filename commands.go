@@ -21,14 +21,20 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 	}
 
 	m["/nick"] = func(peer *ricochetbot.Peer, message string, words []string) {
-		if len(words) == 2 {
-			// TODO: make sure it only has allowable characters and is short enough
-			ricochet2Nick[peer.Onion] = words[1]
-			nick2Ricochet[words[1]] = peer.Onion
-			SendToAll(peer.Bot, nil, "*** "+peer.Onion+" is now known as "+words[1])
-		} else {
+		if len(words) != 2 {
 			peer.SendMessage("usage: /nick foo")
+			return
 		}
+
+		oldnick, exists := ricochet2Nick[peer.Onion]
+		if exists {
+			delete(nick2Ricochet, oldnick)
+		}
+
+		// TODO: make sure new nick only has allowable characters and is short enough
+		ricochet2Nick[peer.Onion] = words[1]
+		nick2Ricochet[words[1]] = peer.Onion
+		SendToAll(peer.Bot, nil, "*** "+peer.Onion+" is now known as "+words[1])
 	}
 
 	m["/who"] = func(peer *ricochetbot.Peer, message string, words []string) {
@@ -45,6 +51,20 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 			return strings.Compare(peers[a], peers[b]) < 0
 		})
 		peer.SendMessage("Connected peers:\n" + strings.Join(peers, "\n"))
+	}
+
+	m["/whois"] = func(peer *ricochetbot.Peer, message string, words []string) {
+		if len(words) != 2 {
+			peer.SendMessage("usage: /whois foo")
+			return
+		}
+
+		onion, exists := nick2Ricochet[words[1]]
+		if exists {
+			peer.SendMessage(onion + " (" + words[1] + ")")
+		} else {
+			peer.SendMessage("no such nick: " + words[1])
+		}
 	}
 
 	return m
