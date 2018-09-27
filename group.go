@@ -7,9 +7,10 @@ import (
 	"log"
 )
 
+// avoidPeer can be nil to send a message to everyone
 func SendToAll(bot *ricochetbot.RicochetBot, avoidPeer *ricochetbot.Peer, message string) {
 	for _, p := range bot.Peers {
-		if p.Onion != avoidPeer.Onion {
+		if avoidPeer == nil || p.Onion != avoidPeer.Onion {
 			p.SendMessage(message)
 		}
 	}
