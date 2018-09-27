@@ -13,7 +13,6 @@ Still to implement:
  - peer tracking, so it can automatically connect to peers on startup
  - automatically generate a private key
  - some "command" system, so you can go "/whois jes" to find out the Ricochet ID belonging to the user with nickname "jes", or "/who" to get a list of connected peers
- - maybe some welcome message when they first login
 
 Commands we might want:
  /who          - list connected peers

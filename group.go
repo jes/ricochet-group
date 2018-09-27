@@ -32,6 +32,10 @@ func main() {
 		SendToAll(bot, peer, "*** "+peer.Onion+" has connected.")
 		return true // true == already-known contact
 	}
+	bot.OnReadyToChat = func(peer *ricochetbot.Peer) {
+		fmt.Println(peer.Onion, "ready to chat")
+		peer.SendMessage("*** welcome to ricochet group chat.")
+	}
 	bot.OnMessage = func(peer *ricochetbot.Peer, message string) {
 		message = "<" + peer.Onion + "> " + message
 		SendToAll(bot, peer, message)
