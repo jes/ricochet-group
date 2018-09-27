@@ -5,7 +5,6 @@ See https://ricochet.im/
 Basic functionality is working.
 
 Still to implement:
- - nicknames
  - private groups (currently any client can connect to any group)
    - this should support both a configurable list of allowable peers, and a password that will let in anyone who knows it
  - admin rights (e.g. to kick people)
