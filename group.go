@@ -9,7 +9,7 @@ import (
 
 func SendToAll(bot *ricochetbot.RicochetBot, avoidPeer *ricochetbot.Peer, message string) {
 	for _, p := range bot.Peers {
-		if p != avoidPeer {
+		if p.Onion != avoidPeer.Onion {
 			p.SendMessage(message)
 		}
 	}
