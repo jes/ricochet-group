@@ -28,7 +28,7 @@ func main() {
 		fmt.Println("We connected to ", peer.Onion)
 	}
 	bot.OnNewPeer = func(peer *ricochetbot.Peer) bool {
-		fmt.Println(peer.Onion, " connected to us")
+		fmt.Println(peer.Onion, "connected to us")
 		SendToAll(bot, peer, "*** "+peer.Onion+" has connected.")
 		return true // true == already-known contact
 	}
@@ -37,11 +37,11 @@ func main() {
 		SendToAll(bot, peer, message)
 	}
 	bot.OnContactRequest = func(peer *ricochetbot.Peer, name string, desc string) bool {
-		fmt.Println(peer.Onion, " wants to be our friend")
+		fmt.Println(peer.Onion, "wants to be our friend")
 		return true // true == accept
 	}
 	bot.OnDisconnect = func(peer *ricochetbot.Peer) {
-		fmt.Println(peer.Onion, " disconnected")
+		fmt.Println(peer.Onion, "disconnected")
 		SendToAll(bot, peer, "*** "+peer.Onion+" has disconnected.")
 	}
 
