@@ -21,6 +21,18 @@ func SendToAll(bot *ricochetbot.RicochetBot, avoidPeer *ricochetbot.Peer, messag
 	}
 }
 
+func IsAllowedUser(onion string) bool {
+	allowedusers := viper.GetStringSlice("allowedusers")
+
+	for _, user := range allowedusers {
+		if user == onion {
+			return true
+		}
+	}
+
+	return false
+}
+
 func main() {
 	viper.SetConfigType("yaml")
 	viper.SetConfigName("config")
@@ -65,7 +77,12 @@ func main() {
 	bot.OnNewPeer = func(peer *ricochetbot.Peer) bool {
 		fmt.Println(peer.Onion, "connected to us")
 		SendToAll(bot, peer, "*** "+peer.Onion+" has connected.")
-		return true // true == already-known contact
+		if viper.GetBool("publicgroup") == true || IsAllowedUser(peer.Onion) {
+			return true
+		} else {
+			fmt.Println(peer.Onion + " not in allowed users list! Refusing connection")
+			return false
+		}
 	}
 	bot.OnReadyToChat = func(peer *ricochetbot.Peer) {
 		fmt.Println(peer.Onion, "ready to chat")
@@ -92,7 +109,12 @@ func main() {
 	}
 	bot.OnContactRequest = func(peer *ricochetbot.Peer, name string, desc string) bool {
 		fmt.Println(peer.Onion, "wants to be our friend")
-		return true // true == accept
+		if viper.GetBool("publicgroup") == true || IsAllowedUser(peer.Onion) {
+			return true
+		} else {
+			fmt.Println(peer.Onion + " not in allowed users list! Refusing contact request")
+			return false
+		}
 	}
 	bot.OnDisconnect = func(peer *ricochetbot.Peer) {
 		fmt.Println(peer.Onion, "disconnected")

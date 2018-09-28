@@ -5,10 +5,9 @@ See https://ricochet.im/
 Basic functionality is working.
 
 Still to implement:
- - private groups (currently any client can connect to any group)
-   - this should support both a configurable list of allowable peers, and a password that will let in anyone who knows it
-   - getting the password correct should add you to the list of allowed peers so you don't have to type it every time you connect
-   - /invite should add an id to the list of allowable peers
+ - password-protected private groups
+   - getting the password correct should add you to allowedusers
+   - /invite should also add an id to allowedusers
  - admin rights (e.g. to kick people)
  - peer tracking, so it can automatically connect to peers on startup
  - automatically generate a private key
