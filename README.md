@@ -19,6 +19,8 @@ Still to implement:
  - accept config from either yaml file or command line (think viper has this built-in)
  - how should persistent state be tracked (peer list, etc.)?
    - would be handy to be in config file, but it's a bit dirty to be programmatically rewriting the config file
+ - easy first-run experience & documentation about how to set it up
+ - systemd unit
 
 admin commands still to implement:
 
