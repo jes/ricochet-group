@@ -75,8 +75,6 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 			peer.SendMessage("Sorry, changing the welcome message is not implemented yet")
 		} else if len(words) == 1 {
 			peer.SendMessage(viper.GetString("welcomemsg"))
-		} else if IsAdmin(peer.Onion) {
-			peer.SendMessage("usage: /welcome -or- /welcome [new message]")
 		} else {
 			peer.SendMessage("usage: /welcome")
 		}
