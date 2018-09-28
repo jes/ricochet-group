@@ -2,9 +2,12 @@ package main
 
 import (
 	"github.com/jes/ricochetbot"
+	"regexp"
 	"sort"
 	"strings"
 )
+
+var IsAllowableNick = regexp.MustCompile(`^[a-zA-Z0-9-_]+$`).MatchString
 
 func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 	m := make(map[string]func(*ricochetbot.Peer, string, []string))
@@ -28,7 +31,11 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 
 		curRicochet, exists := nick2Ricochet[words[1]]
 		if exists {
-			peer.SendMessage("The nick '" + words[1] + "' is already taken by " + curRicochet)
+			if curRicochet == peer.Onion {
+				peer.SendMessage("But you're already called " + words[1] + "!")
+			} else {
+				peer.SendMessage("The nick '" + words[1] + "' is already taken by " + curRicochet)
+			}
 			return
 		}
 
@@ -37,7 +44,14 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 			delete(nick2Ricochet, oldnick)
 		}
 
-		// TODO: make sure new nick only has allowable characters and is short enough
+		if len(words[1]) > 16 {
+			peer.SendMessage("Maximum of 16 characters for a nick")
+			return
+		}
+		if !IsAllowableNick(words[1]) {
+			peer.SendMessage("Nick can only contain letters, numbers, hyphen and underscore")
+			return
+		}
 		ricochet2Nick[peer.Onion] = words[1]
 		nick2Ricochet[words[1]] = peer.Onion
 		SendToAll(peer.Bot, nil, "*** "+peer.Onion+" is now known as "+words[1])
