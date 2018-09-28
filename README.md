@@ -7,14 +7,17 @@ Basic functionality is working.
 Still to implement:
  - private groups (currently any client can connect to any group)
    - this should support both a configurable list of allowable peers, and a password that will let in anyone who knows it
+   - getting the password correct should add you to the list of allowed peers so you don't have to type it every time you connect
    - /invite should add an id to the list of allowable peers
  - admin rights (e.g. to kick people)
- - config file
  - peer tracking, so it can automatically connect to peers on startup
  - automatically generate a private key
  - different welcome message based on whether it's a new peer or not? (i.e. to tell them to set a nick with /nick)
  - write to stderr some indication of when the bot is ready to connect to, instead of just waiting?
  - stop replies to commands from appearing in the GUI *before* the commands themselves - not sure why this is happening, maybe add 1 second to our message timestamps?
+ - reload config on sighup
+ - accept config from either yaml file or command line (think viper has this built-in)
+ - how should persistent state be tracked (peer list, etc.)? would be handy to be in config file, but it's a bit dirty to be programmatically rewriting the config file
 
 Commands we might still want to implement:
  /welcome      - show the current welcome message

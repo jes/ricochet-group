@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/jes/go-ricochet/utils"
 	"github.com/jes/ricochetbot"
+	"github.com/spf13/viper"
 	"log"
 	"strings"
 )
@@ -21,7 +22,28 @@ func SendToAll(bot *ricochetbot.RicochetBot, avoidPeer *ricochetbot.Peer, messag
 }
 
 func main() {
-	pk, err := utils.LoadPrivateKeyFromFile("./private_key")
+	viper.SetConfigType("yaml")
+	viper.SetConfigName("config")
+	viper.AddConfigPath(".")
+	viper.SetDefault("welcomemsg", "*** welcome to ricochet group chat.")
+	viper.SetDefault("torcontrol", "127.0.0.1:9051") // or e.g. "/var/run/tor/control"
+	viper.SetDefault("torcontroltype", "tcp4")       // or e.g. "unix"
+	viper.SetDefault("torcontrolauthentication", "")
+	viper.SetDefault("allowedusers", []string{})
+	viper.SetDefault("admins", []string{})
+	viper.SetDefault("publicgroup", false)
+
+	if err := viper.ReadInConfig(); err != nil {
+		log.Fatalf("Error reading config file: %s", err)
+	}
+
+	// basic sanity check...
+	if viper.GetBool("publicgroup") == false && len(viper.GetStringSlice("allowedusers")) == 0 {
+		log.Fatalf("Error: ricochet-group is configured to run a private group chat which no users are allowed to connect to")
+	}
+
+	// TODO: generate a key if none exists
+	pk, err := utils.LoadPrivateKeyFromFile("private_key")
 	if err != nil {
 		log.Fatalf("error reading private key file: %v", err)
 	}
@@ -32,6 +54,9 @@ func main() {
 	commands := InitCommands()
 
 	bot := new(ricochetbot.RicochetBot)
+	bot.TorControlAddress = viper.GetString("torcontrol")
+	bot.TorControlType = viper.GetString("torcontroltype")
+	bot.TorControlAuthentication = viper.GetString("torcontrolauthentication")
 	bot.PrivateKey = pk
 
 	bot.OnConnect = func(peer *ricochetbot.Peer) {
@@ -44,7 +69,7 @@ func main() {
 	}
 	bot.OnReadyToChat = func(peer *ricochetbot.Peer) {
 		fmt.Println(peer.Onion, "ready to chat")
-		peer.SendMessage("*** welcome to ricochet group chat.")
+		peer.SendMessage(viper.GetString("welcomemsg"))
 	}
 	bot.OnMessage = func(peer *ricochetbot.Peer, message string) {
 		if message[0] == '/' {
