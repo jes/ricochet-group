@@ -13,7 +13,8 @@ Still to implement:
  - automatically generate a private key
  - different welcome message based on whether it's a new peer or not? (i.e. to tell them to set a nick with /nick)
  - write to stderr some indication of when the bot is ready to connect to, instead of just waiting?
- - stop replies to commands from appearing in the GUI *before* the commands themselves - not sure why this is happening, maybe add 1 second to our message timestamps?
+ - stop replies to commands from appearing in the GUI *before* the commands themselves
+   - not sure why this is happening, and fudging the message timestamps doesn't fix it
  - reload config on sighup
  - accept config from either yaml file or command line (think viper has this built-in)
  - how should persistent state be tracked (peer list, etc.)? would be handy to be in config file, but it's a bit dirty to be programmatically rewriting the config file
