@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/jes/ricochetbot"
+	"github.com/spf13/viper"
 	"regexp"
 	"sort"
 	"strings"
@@ -18,9 +19,21 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 
   /help - Show this text
   /nick foo - Set your nickname
+  /welcome - Show the welcome message
   /who - List connected peers
   /whois foo - Show the ricochet id for the given nickname
 `)
+
+		if IsAdmin(peer.Onion) {
+			peer.SendMessage(
+				`Admin commands:
+
+  /invite id - Invite the given ricochet id to the group
+  /welcome [new message] - Set the welcome message
+  /kick foo - Kick the given ricochet id or nickname
+  /ban foo - Ban the given ricochet id or nickname
+`)
+		}
 	}
 
 	m["/nick"] = func(peer *ricochetbot.Peer, message string, words []string) {
@@ -55,6 +68,18 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 		ricochet2Nick[peer.Onion] = words[1]
 		nick2Ricochet[words[1]] = peer.Onion
 		SendToAll(peer.Bot, nil, "*** "+peer.Onion+" is now known as "+words[1])
+	}
+
+	m["/welcome"] = func(peer *ricochetbot.Peer, message string, words []string) {
+		if IsAdmin(peer.Onion) && len(words) > 1 {
+			peer.SendMessage("Sorry, changing the welcome message is not implemented yet")
+		} else if len(words) == 1 {
+			peer.SendMessage(viper.GetString("welcomemsg"))
+		} else if IsAdmin(peer.Onion) {
+			peer.SendMessage("usage: /welcome -or- /welcome [new message]")
+		} else {
+			peer.SendMessage("usage: /welcome")
+		}
 	}
 
 	m["/who"] = func(peer *ricochetbot.Peer, message string, words []string) {

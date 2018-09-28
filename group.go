@@ -21,16 +21,22 @@ func SendToAll(bot *ricochetbot.RicochetBot, avoidPeer *ricochetbot.Peer, messag
 	}
 }
 
-func IsAllowedUser(onion string) bool {
-	allowedusers := viper.GetStringSlice("allowedusers")
-
-	for _, user := range allowedusers {
-		if user == onion {
+func IsInList(s string, list []string) bool {
+	for _, item := range list {
+		if item == s {
 			return true
 		}
 	}
 
 	return false
+}
+
+func IsAdmin(onion string) bool {
+	return IsInList(onion, viper.GetStringSlice("admins"))
+}
+
+func IsAllowedUser(onion string) bool {
+	return IsInList(onion, viper.GetStringSlice("allowedusers"))
 }
 
 func main() {
