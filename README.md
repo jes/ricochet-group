@@ -20,7 +20,8 @@ Still to implement:
  - how should persistent state be tracked (peer list, etc.)?
    - would be handy to be in config file, but it's a bit dirty to be programmatically rewriting the config file
 
-admin commands:
+admin commands still to implement:
+
     /invite $id   - invite given ricochet id to the chat (i.e. group chat should connect to that id and send a contactrequest)
     /welcome $msg - update the welcome message
     /kick jes     - kick the given nick or ricochet id from the group
