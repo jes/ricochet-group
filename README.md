@@ -16,8 +16,10 @@ Still to implement:
  - stop replies to commands from appearing in the GUI *before* the commands themselves
    - not sure why this is happening, and fudging the message timestamps doesn't fix it
  - reload config on sighup
+   - make sure to disconnect from non-allowed users etc.
  - accept config from either yaml file or command line (think viper has this built-in)
- - how should persistent state be tracked (peer list, etc.)? would be handy to be in config file, but it's a bit dirty to be programmatically rewriting the config file
+ - how should persistent state be tracked (peer list, etc.)?
+   - would be handy to be in config file, but it's a bit dirty to be programmatically rewriting the config file
 
 Commands we might still want to implement:
  /welcome      - show the current welcome message
