@@ -66,6 +66,12 @@ func main() {
 		log.Fatalf("error reading private key file: %v", err)
 	}
 
+	onion, err := utils.GetOnionAddress(pk)
+	if err != nil {
+		log.Fatalf("can't get our onion address from our private key ??? %v", err)
+	}
+	fmt.Println("ricochet-group coming up at ricochet:" + onion + " ...")
+
 	onion2Nick = make(map[string]string)
 	nick2Onion = make(map[string]string)
 
