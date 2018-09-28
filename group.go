@@ -9,8 +9,8 @@ import (
 	"strings"
 )
 
-var ricochet2Nick map[string]string
-var nick2Ricochet map[string]string
+var onion2Nick map[string]string
+var nick2Onion map[string]string
 
 // avoidPeer can be nil to send a message to everyone
 func SendToAll(bot *ricochetbot.RicochetBot, avoidPeer *ricochetbot.Peer, message string) {
@@ -66,8 +66,8 @@ func main() {
 		log.Fatalf("error reading private key file: %v", err)
 	}
 
-	ricochet2Nick = make(map[string]string)
-	nick2Ricochet = make(map[string]string)
+	onion2Nick = make(map[string]string)
+	nick2Onion = make(map[string]string)
 
 	commands := InitCommands()
 
@@ -105,7 +105,7 @@ func main() {
 			}
 		} else {
 			name := peer.Onion
-			nick, exists := ricochet2Nick[peer.Onion]
+			nick, exists := onion2Nick[peer.Onion]
 			if exists {
 				name = nick
 			}
@@ -126,10 +126,10 @@ func main() {
 		fmt.Println(peer.Onion, "disconnected")
 		SendToAll(bot, peer, "*** "+peer.Onion+" has disconnected.")
 
-		nick, exists := ricochet2Nick[peer.Onion]
+		nick, exists := onion2Nick[peer.Onion]
 		if exists {
-			delete(ricochet2Nick, peer.Onion)
-			delete(nick2Ricochet, nick)
+			delete(onion2Nick, peer.Onion)
+			delete(nick2Onion, nick)
 		}
 	}
 

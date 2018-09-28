@@ -42,7 +42,7 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 			return
 		}
 
-		curRicochet, exists := nick2Ricochet[words[1]]
+		curRicochet, exists := nick2Onion[words[1]]
 		if exists {
 			if curRicochet == peer.Onion {
 				peer.SendMessage("But you're already called " + words[1] + "!")
@@ -52,9 +52,9 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 			return
 		}
 
-		oldnick, exists := ricochet2Nick[peer.Onion]
+		oldnick, exists := onion2Nick[peer.Onion]
 		if exists {
-			delete(nick2Ricochet, oldnick)
+			delete(nick2Onion, oldnick)
 		}
 
 		if len(words[1]) > 16 {
@@ -65,8 +65,8 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 			peer.SendMessage("Nick can only contain letters, numbers, hyphen and underscore")
 			return
 		}
-		ricochet2Nick[peer.Onion] = words[1]
-		nick2Ricochet[words[1]] = peer.Onion
+		onion2Nick[peer.Onion] = words[1]
+		nick2Onion[words[1]] = peer.Onion
 		SendToAll(peer.Bot, nil, "*** "+peer.Onion+" is now known as "+words[1])
 	}
 
@@ -86,7 +86,7 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 		peers := make([]string, 0)
 		for _, p := range peer.Bot.Peers {
 			text := p.Onion
-			nick, exists := ricochet2Nick[p.Onion]
+			nick, exists := onion2Nick[p.Onion]
 			if exists {
 				text += " (" + nick + ")"
 			}
@@ -104,7 +104,7 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 			return
 		}
 
-		onion, exists := nick2Ricochet[words[1]]
+		onion, exists := nick2Onion[words[1]]
 		if exists {
 			peer.SendMessage(onion + " (" + words[1] + ")")
 		} else {
