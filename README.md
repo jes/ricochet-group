@@ -21,10 +21,10 @@ Still to implement:
    - would be handy to be in config file, but it's a bit dirty to be programmatically rewriting the config file
 
 admin commands:
- /invite $id   - invite given ricochet id to the chat (i.e. group chat should connect to that id and send a contactrequest)
- /welcome $msg - update the welcome message
- /kick jes     - kick the given nick or ricochet id from the group
- /ban jes      - ban the given nick or ricochet id from the group
+    /invite $id   - invite given ricochet id to the chat (i.e. group chat should connect to that id and send a contactrequest)
+    /welcome $msg - update the welcome message
+    /kick jes     - kick the given nick or ricochet id from the group
+    /ban jes      - ban the given nick or ricochet id from the group
 
 Persistent state we will need to store:
  - welcome message
