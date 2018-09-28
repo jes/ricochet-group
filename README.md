@@ -7,6 +7,7 @@ Basic functionality is working.
 Still to implement:
  - private groups (currently any client can connect to any group)
    - this should support both a configurable list of allowable peers, and a password that will let in anyone who knows it
+   - /invite should add an id to the list of allowable peers
  - admin rights (e.g. to kick people)
  - config file
  - peer tracking, so it can automatically connect to peers on startup

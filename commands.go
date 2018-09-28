@@ -26,6 +26,12 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 			return
 		}
 
+		curRicochet, exists := nick2Ricochet[words[1]]
+		if exists {
+			peer.SendMessage("The nick '" + words[1] + "' is already taken by " + curRicochet)
+			return
+		}
+
 		oldnick, exists := ricochet2Nick[peer.Onion]
 		if exists {
 			delete(nick2Ricochet, oldnick)
