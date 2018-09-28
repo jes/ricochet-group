@@ -87,6 +87,9 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 		for _, p := range peer.Bot.Peers {
 			text := p.Onion
 			nick, exists := onion2Nick[p.Onion]
+			if IsAdmin(p.Onion) {
+				text = "*" + text
+			}
 			if exists {
 				text += " (" + nick + ")"
 			}
@@ -106,6 +109,9 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 
 		onion, exists := nick2Onion[words[1]]
 		if exists {
+			if IsAdmin(onion) {
+				onion = "*" + onion
+			}
 			peer.SendMessage(onion + " (" + words[1] + ")")
 		} else {
 			peer.SendMessage("no such nick: " + words[1])
