@@ -2,10 +2,11 @@
 
 publicgroup: true
 
-admins:
- - it2j3z6t6ksumpzd
+# setup admin users like so:
+#    admins:
+#     - it2j3z6t6ksumpzd
 
-# if publicgroup is true, anyone is allowed to connect
+# if publicgroup is true, anyone is allowed to connect to your chat group
 # if publicgroup is false, list allowed users like so:
 #   allowedusers:
 #    - p3znpgn2rzeakrk7
