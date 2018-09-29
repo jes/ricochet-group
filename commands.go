@@ -42,6 +42,9 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 			return
 		}
 
+		nickLock.Lock()
+		defer nickLock.Unlock()
+
 		curRicochet, exists := nick2Onion[words[1]]
 		if exists {
 			if curRicochet == peer.Onion {

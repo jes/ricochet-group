@@ -7,8 +7,10 @@ import (
 	"github.com/spf13/viper"
 	"log"
 	"strings"
+	"sync"
 )
 
+var nickLock sync.Mutex
 var onion2Nick map[string]string
 var nick2Onion map[string]string
 
@@ -132,6 +134,8 @@ func main() {
 		fmt.Println(peer.Onion, "disconnected")
 		SendToAll(bot, peer, "*** "+peer.Onion+" has disconnected.")
 
+		nickLock.Lock()
+		defer nickLock.Unlock()
 		nick, exists := onion2Nick[peer.Onion]
 		if exists {
 			delete(onion2Nick, peer.Onion)
