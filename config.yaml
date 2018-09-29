@@ -2,15 +2,15 @@
 
 publicgroup: true
 
-# setup admin users like so:
-#    admins:
-#     - it2j3z6t6ksumpzd
+# setup admin users by listing their ricochet ids, like so:
+#   admins:
+#    - aaaaaaaaaaaaaaaa
 
 # if publicgroup is true, anyone is allowed to connect to your chat group
-# if publicgroup is false, list allowed users like so:
+# if publicgroup is false, list ricochet ids of allowed users like so:
 #   allowedusers:
-#    - p3znpgn2rzeakrk7
-#    - it2j3z6t6ksumpzd
+#    - aaaaaaaaaaaaaaaa
+#    - bbbbbbbbbbbbbbbb
 
 welcomemsg: "*** welcome to ricochet group chat."
 
