@@ -23,6 +23,7 @@ Still required for "launch" (i.e. convenient to install and run a public group):
  - easy first-run experience & documentation about how to set it up
  - kicking/banning
  - why doesn't the instance on my laptop work?
+ - remove error about "no install location outside GOPATH" when running "go get"
 
 Nice to have later:
  - password-protected private groups
@@ -73,7 +74,7 @@ Fetch the ricochet-group dependencies:
 
     $ go get
 
-(This may take a while and process no output). Build ricochet-group:
+(This may take a while and produce no output). Build ricochet-group:
 
     $ go build
 
