@@ -18,12 +18,8 @@ Basic functionality is working.
 
 Still required for "launch" (i.e. convenient to install and run a public group):
  - automatically connect to known peers at startup
- - automatically generate a private key
- - how should persistent state be tracked (peer list, etc.)?
-   - would be handy to be in config file, but it's a bit dirty to be programmatically rewriting the config file
  - easy first-run experience & documentation about how to set it up
  - kicking/banning
- - how do we reconcile configuration of allowedusers, welcomemsg, etc. in the config file with letting admins change it via commands in the chat at runtime?
 
 Nice to have later:
  - password-protected private groups
@@ -52,10 +48,9 @@ admin commands still to implement:
     /allowedusers - list allowed users
     /bans         - list banned users
 
-Persistent state we will need to store:
+Persistent state we still need to store:
  - welcome message
  - list of allowedusers
- - list of peers to connect to, if different from allowedusers (e.g. on a public group?)
  - list of admins
  - list of banned users
  - onion2Nick
