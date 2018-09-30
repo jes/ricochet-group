@@ -18,8 +18,11 @@ Basic functionality is working.
 
 Still required for "launch" (i.e. convenient to install and run a public group):
  - automatically connect to known peers at startup
+ - automatically manage the tor process so we don't need this "debian-tor" business
+   - maybe make a ricochet-group user in install.sh?
  - easy first-run experience & documentation about how to set it up
  - kicking/banning
+ - why doesn't the instance on my laptop work?
 
 Nice to have later:
  - password-protected private groups
@@ -66,11 +69,21 @@ As a minimum, you will need to install and run `tor`, and enable its control por
     ControlPort 9051
     CookieAuthentication 1
 
-After that, you can get started by simply editing `config.yaml` in this directory and then:
+Fetch the ricochet-group dependencies:
+
+    $ go get
+
+(This may take a while and process no output). Build ricochet-group:
+
+    $ go build
+
+After that, you can get started by running:
 
     $ sudo -u debian-tor ./ricochet-group
 
 (You need to run it as whatever user has access to the `tor` authentication cookie).
+
+Edit `config.yaml` to taste.
 
 ### Permanent installation
 
