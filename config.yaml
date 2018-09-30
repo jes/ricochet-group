@@ -22,3 +22,5 @@ welcomemsg: "*** welcome to ricochet group chat."
 #   torcontroltype: unix
 # and set the authentication string if applicable:
 #   torcontrolauthentication: foo
+#
+# the default configuration is to assume 127.0.0.1:9051 and tcp4
