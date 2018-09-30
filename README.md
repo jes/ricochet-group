@@ -99,6 +99,9 @@ Once you're satisfied, you can make it start at boot:
 
     $ sudo systemctl enable ricochet-group
 
+It is possible to run multiple different group chats on one machine by simply running multiple instances of `ricochet-group`.
+You'll have to sort out your own systemd configuration for this however.
+
 Configuration
 -------------
 
