@@ -21,6 +21,8 @@ Still required for "launch" (i.e. convenient to install and run a public group):
  - how should persistent state be tracked (peer list, etc.)?
    - would be handy to be in config file, but it's a bit dirty to be programmatically rewriting the config file
  - easy first-run experience & documentation about how to set it up
+ - kicking/banning
+ - how do we reconcile configuration of allowedusers, welcomemsg, etc. in the config file with letting admins change it via commands in the chat at runtime?
 
 Nice to have later:
  - password-protected private groups
@@ -33,8 +35,9 @@ Nice to have later:
  - reload config on sighup
    - make sure to disconnect from non-allowed users, banned users, etc.
  - accept config from either yaml file or command line (think viper has this built-in)
- - convenient way to run multiple group chats on one machine (just a configuration problem)
+ - convenient way to run multiple group chats on one machine (probably just a matter of configuration)
  - unit tests
+ - check if the stuff that rejects non-allowed users is actually robust (I have doubts)
 
 admin commands still to implement:
 
@@ -89,9 +92,10 @@ If all went well, the first line should tell you your group chat's ricochet id:
 
     Sep 30 01:09:36 localhost ricochet-group[26754]: ricochet-group coming up at ricochet:3yah8ol5a6ub3rto ...
 
-You can then connect to the group chat and verify that it works.
+You can then connect to the group chat and verify that it works. It might take 30 seconds or more for the hidden
+service to become connectable, so don't be alarmed if it doesn't work immediately.
 
-Once satisfied, make it start at boot:
+Once you're satisfied, you can make it start at boot:
 
     $ sudo systemctl enable ricochet-group
 
