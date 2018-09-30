@@ -9,7 +9,8 @@ if [ ! -e ricochet-group ]; then
 fi
 
 cp ricochet-group /usr/local/bin/
-mkdir -p /etc/ricochet-group
+mkdir -p /etc/ricochet-group/
+mkdir -p /var/run/ricochet-group/
 
 # don't overwrite handwritten systemd unit
 if [ -e /etc/systemd/system/ricochet-group.service ]; then
