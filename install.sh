@@ -11,6 +11,7 @@ fi
 cp ricochet-group /usr/local/bin/
 mkdir -p /etc/ricochet-group/
 mkdir -p /var/run/ricochet-group/
+chown debian-tor /var/run/ricochet-group/ || echo -e "\n\n*** You'll need to change the owner of /var/run/ricochet-group to whatever user you'll be running ricochet-group as (ricochet-group will need access to the tor control cookie)\n\n------------------\n"
 
 # don't overwrite handwritten systemd unit
 if [ -e /etc/systemd/system/ricochet-group.service ]; then
