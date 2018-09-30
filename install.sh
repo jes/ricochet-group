@@ -1,4 +1,5 @@
 #!/bin/bash
+# basic install script for ricochet-group
 
 set -e
 
@@ -24,4 +25,4 @@ else
     cp config.yaml /etc/ricochet-group/
 fi
 
-echo -e "Installed!\nMake sure you enable:\n\n  ControlPort 9051\n  CookieAuthentication 1\n\nin your torrc (maybe /etc/tor/torrc).\nNext edit /etc/ricochet-group/config.yaml to taste, and then run:\n\n  $ sudo systemctl start ricochet-group\n\nto start ricochet-group, and:\n\n  $ sudo systemctl enable ricochet-group\n\nto have it start automatically at boot.\n"
+echo -e "Installed!\nMake sure you enable:\n\n  ControlPort 9051\n  CookieAuthentication 1\n\nin your torrc (maybe /etc/tor/torrc).\nNext edit /etc/ricochet-group/config.yaml to taste, and then run:\n\n  $ sudo systemctl start ricochet-group\n\nto start ricochet-group, and:\n\n  $ sudo systemctl enable ricochet-group\n\nto have it start automatically at boot.\n\nIf this is not Ubuntu you may have to edit /etc/systemd/system/ricochet-group.service to make it work, specifically the name of the tor user"
