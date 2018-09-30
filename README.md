@@ -38,6 +38,7 @@ Nice to have later:
  - convenient way to run multiple group chats on one machine (probably just a matter of configuration)
  - unit tests
  - check if the stuff that rejects non-allowed users is actually robust (I have doubts)
+ - a message to go along with kicks and bans (and store the ban messages in the ban list to display in /bans)
 
 admin commands still to implement:
 
@@ -45,8 +46,10 @@ admin commands still to implement:
     /welcome $msg - update the welcome message
     /kick jes     - kick the given nick or ricochet id from the group
     /ban jes      - ban the given nick or ricochet id from the group
+    /unban $id    - unban the given ricochet id
     /admins       - list admins
     /allowedusers - list allowed users
+    /bans         - list banned users
 
 Persistent state we will need to store:
  - welcome message
