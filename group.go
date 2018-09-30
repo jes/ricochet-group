@@ -5,6 +5,7 @@ import (
 	"github.com/jes/go-ricochet/utils"
 	"github.com/jes/ricochetbot"
 	"github.com/spf13/viper"
+	"io/ioutil"
 	"log"
 	"strings"
 	"sync"
@@ -23,22 +24,12 @@ func SendToAll(bot *ricochetbot.RicochetBot, avoidPeer *ricochetbot.Peer, messag
 	}
 }
 
-func IsInList(s string, list []string) bool {
-	for _, item := range list {
-		if item == s {
-			return true
-		}
-	}
-
-	return false
-}
-
 func IsAdmin(onion string) bool {
-	return IsInList(onion, viper.GetStringSlice("admins"))
+	return IsInList(onion, viper.GetStringSlice("admins")) || IsInList(onion, GetList("admins"))
 }
 
 func IsAllowedUser(onion string) bool {
-	return IsInList(onion, viper.GetStringSlice("allowedusers"))
+	return IsInList(onion, viper.GetStringSlice("allowedusers")) || IsInList(onion, GetList("allowedusers"))
 }
 
 func main() {
@@ -56,6 +47,7 @@ func main() {
 	viper.SetDefault("allowedusers", []string{})
 	viper.SetDefault("admins", []string{})
 	viper.SetDefault("publicgroup", false)
+	viper.SetDefault("datadir", ".")
 
 	if err := viper.ReadInConfig(); err != nil {
 		log.Fatalf("Error reading config file: %s", err)
@@ -66,10 +58,21 @@ func main() {
 		log.Fatalf("Error: ricochet-group is configured to run a private group chat which no users are allowed to connect to")
 	}
 
-	// TODO: generate a key if none exists
-	pk, err := utils.LoadPrivateKeyFromFile("private_key")
+	// load a private key
+	pkFilename := viper.GetString("datadir") + "/private_key"
+	pk, err := utils.LoadPrivateKeyFromFile(pkFilename)
 	if err != nil {
-		log.Fatalf("error reading private key file: %v", err)
+		// generate a new key if we can't load one
+		pkNew, pkErr := utils.GeneratePrivateKey()
+		if pkErr != nil {
+			log.Fatalf("error reading private key file: %v, and error generating private key: %v", err, pkErr)
+		}
+		pk = pkNew
+
+		err2 := ioutil.WriteFile(pkFilename, []byte(utils.PrivateKeyToString(pk)), 0600)
+		if err2 != nil {
+			log.Fatalf("error reading private key file: %v, and error writing private key file: %v", err, err2)
+		}
 	}
 
 	onion, err := utils.GetOnionAddress(pk)
@@ -105,6 +108,7 @@ func main() {
 	bot.OnReadyToChat = func(peer *ricochetbot.Peer) {
 		fmt.Println(peer.Onion, "ready to chat")
 		peer.SendMessage(viper.GetString("welcomemsg"))
+		AddToList("peers", peer.Onion)
 	}
 	bot.OnMessage = func(peer *ricochetbot.Peer, message string) {
 		if message[0] == '/' {
@@ -137,6 +141,7 @@ func main() {
 	bot.OnDisconnect = func(peer *ricochetbot.Peer) {
 		fmt.Println(peer.Onion, "disconnected")
 		SendToAll(bot, peer, "*** "+peer.Onion+" has disconnected.")
+		RemoveFromList("peers", peer.Onion)
 
 		nickLock.Lock()
 		defer nickLock.Unlock()
