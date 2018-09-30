@@ -91,6 +91,10 @@ If all went well, the first line should tell you your group chat's ricochet id:
 
     Sep 30 01:09:36 localhost ricochet-group[26754]: ricochet-group coming up at ricochet:3yah8ol5a6ub3rto ...
 
+(If it didn't start properly, you'll want to see the error message. In my experience, error messages when the program
+exits immediately are not shown by `journalctl -u ricochet-group`, but you should be able to find them with
+`journalctl | grep ricochet-group | tail`. I don't know why this is.)
+
 You can then connect to the group chat and verify that it works. It might take 30 seconds or more for the hidden
 service to become connectable, so don't be alarmed if it doesn't work immediately.
 
