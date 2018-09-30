@@ -5,8 +5,9 @@ This is a pretty rudimentary group chat system for Ricochet IM.
 
 See https://ricochet.im/
 
-`ricochet-group` works by creating a central ricochet peer that runs the group, which relays messages from the sending user to
-all of the other users. It essentially implements an IRC channel over the Ricochet protocol.
+`ricochet-group` is compatible with the standard Ricochet GUI. It works by creating a central ricochet peer that runs
+the group, which relays messages from the sending user to all of the other users. It essentially implements an IRC
+channel over the Ricochet protocol.
 
 It hasn't been security-tested and is only a hobby project. Rely on it at your own risk.
 
