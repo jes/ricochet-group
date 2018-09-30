@@ -27,4 +27,4 @@ welcomemsg: "*** welcome to ricochet group chat."
 
 # directory that runtime data is to be read from and written to
 # this contains private key and peer lists
-datadir: "."
+datadir: "/var/run/ricochet-group"

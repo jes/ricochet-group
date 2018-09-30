@@ -21,9 +21,9 @@ fi
 
 # don't overwrite handwritten config
 if [ -e /etc/ricochet-group/config.yaml ]; then
-    cmp --quiet config.yaml /etc/ricochet-group/config.yaml || echo -e "\n\n*** Your installed config file is different from the default!\n*** You might want to examine changes between /etc/ricochet-group/config.yaml and ./config.yaml and decide whether you want to edit your config.\n\n------------------\n"
+    cmp --quiet config.yaml.install /etc/ricochet-group/config.yaml || echo -e "\n\n*** Your installed config file is different from the default!\n*** You might want to examine changes between /etc/ricochet-group/config.yaml and ./config.yaml.install and decide whether you want to edit your config.\n\n------------------\n"
 else
-    cp config.yaml /etc/ricochet-group/
+    cp config.yaml.install /etc/ricochet-group/
 fi
 
 echo -e "Installed!\nMake sure you enable:\n\n  ControlPort 9051\n  CookieAuthentication 1\n\nin your torrc (maybe /etc/tor/torrc).\nNext edit /etc/ricochet-group/config.yaml to taste, and then run:\n\n  $ sudo systemctl start ricochet-group\n\nto start ricochet-group, and:\n\n  $ sudo systemctl enable ricochet-group\n\nto have it start automatically at boot.\n\nIf this is not Ubuntu you may have to edit /etc/systemd/system/ricochet-group.service to make it work, specifically the name of the tor user"
