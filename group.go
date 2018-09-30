@@ -44,7 +44,11 @@ func IsAllowedUser(onion string) bool {
 func main() {
 	viper.SetConfigType("yaml")
 	viper.SetConfigName("config")
+
+	// paths that come first take priority
 	viper.AddConfigPath(".")
+	viper.AddConfigPath("/etc/ricochet-group/")
+
 	viper.SetDefault("welcomemsg", "*** welcome to ricochet group chat.")
 	viper.SetDefault("torcontrol", "127.0.0.1:9051") // or e.g. "/var/run/tor/control"
 	viper.SetDefault("torcontroltype", "tcp4")       // or e.g. "unix"
