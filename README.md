@@ -1,6 +1,17 @@
-This is a very early-stage work-in-progress towards a group chat server for Ricochet.
+ricochet-group
+==============
+
+This is a pretty rudimentary group chat system for Ricochet IM.
 
 See https://ricochet.im/
+
+`ricochet-group` works by creating a central ricochet peer that runs the group, which relays messages from the sending user to
+all of the other users. It essentially implements an IRC channel over the Ricochet protocol.
+
+It hasn't been security-tested and is only a hobby project. Rely on it at your own risk.
+
+Current status
+--------------
 
 Basic functionality is working.
 
@@ -22,6 +33,8 @@ Nice to have later:
  - reload config on sighup
    - make sure to disconnect from non-allowed users, banned users, etc.
  - accept config from either yaml file or command line (think viper has this built-in)
+ - convenient way to run multiple group chats on one machine (just a configuration problem)
+ - unit tests
 
 admin commands still to implement:
 
@@ -92,3 +105,14 @@ All of the available configuration options are either used or described in the e
 
 If you want your group chat to use a specific ricochet id (e.g. a vanity address), you can copy the corresponding private key into
 `/var/run/ricochet-group/private_key` instead of using the auto-generated key.
+
+### Private groups
+
+Private groups do appear to work, but I can't warrant that there aren't bugs that would allow non-allowed users to read
+a private chat, so you rely on it at your own risk.
+
+Contact me
+----------
+
+`ricochet-group` is written by James Stanley. You can read my blog at https://incoherency.co.uk/ , email me at
+james@incoherency.co.uk, or message me on ricochet at ricochet:it2j3z6t6ksumpzd
