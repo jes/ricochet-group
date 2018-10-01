@@ -18,8 +18,6 @@ Basic functionality is working.
 
 Still required for "launch" (i.e. convenient to install and run a public group):
  - automatically connect to known peers at startup
- - automatically manage the tor process so we don't need this "debian-tor" business
-   - maybe make a ricochet-group user in install.sh?
  - easy first-run experience & documentation about how to set it up
  - kicking/banning
  - why doesn't the instance on my laptop work?
@@ -64,11 +62,7 @@ Installation
 
 ### Basic usage
 
-As a minimum, you will need to install and run `tor`, and enable its control port. You'll want something in your `torrc`
-(`/etc/tor/torrc` on Ubuntu) like:
-
-    ControlPort 9051
-    CookieAuthentication 1
+As a minimum, you will need to first install `tor` and `go`.
 
 Fetch the ricochet-group dependencies:
 
@@ -80,17 +74,13 @@ Fetch the ricochet-group dependencies:
 
 After that, you can get started by running:
 
-    $ sudo -u debian-tor ./ricochet-group
-
-(You need to run it as whatever user has access to the `tor` authentication cookie).
+    $ ./ricochet-group
 
 Edit `config.yaml` to taste.
 
 ### Permanent installation
 
-The included script `install.sh` should install `ricochet-group` on Ubuntu systems. If you're running something else
-it probably won't work. Specifically, the systemd unit in `ricochet-group.service` assumes that the tor user is called
-`debian-tor`.
+The included script `install.sh` should install `ricochet-group` on Ubuntu systems and hopefully others.
 
 Having installed `ricochet-group` with `install.sh`, you should edit the config in `/etc/ricochet-group/config.yaml`
 and then start it with systemd:

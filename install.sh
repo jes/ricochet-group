@@ -8,10 +8,14 @@ if [ ! -e ricochet-group ]; then
     exit 1
 fi
 
+# create ricochet-group user if there isn't one already
+grep -q ^ricochet-group: /etc/passwd || useradd --system --home-dir /var/run/ricochet-group/ ricochet-group
+
+# create files and directories
 cp ricochet-group /usr/local/bin/
 mkdir -p /etc/ricochet-group/
 mkdir -p /var/run/ricochet-group/
-chown debian-tor /var/run/ricochet-group/ || echo -e "\n\n*** You'll need to change the owner of /var/run/ricochet-group to whatever user you'll be running ricochet-group as (ricochet-group will need access to the tor control cookie)\n\n------------------\n"
+chown ricochet-group /var/run/ricochet-group/ || echo -e "\n\n*** You'll need to change the owner of /var/run/ricochet-group to whatever user you'll be running ricochet-group as (ricochet-group will need access to the tor control cookie)\n\n------------------\n"
 
 # don't overwrite handwritten systemd unit
 if [ -e /etc/systemd/system/ricochet-group.service ]; then
@@ -27,4 +31,4 @@ else
     cp config.yaml.install /etc/ricochet-group/
 fi
 
-echo -e "Installed!\nMake sure you enable:\n\n  ControlPort 9051\n  CookieAuthentication 1\n\nin your torrc (maybe /etc/tor/torrc).\nNext edit /etc/ricochet-group/config.yaml to taste, and then run:\n\n  $ sudo systemctl start ricochet-group\n\nto start ricochet-group, and:\n\n  $ sudo systemctl enable ricochet-group\n\nto have it start automatically at boot.\n\nIf this is not Ubuntu you may have to edit /etc/systemd/system/ricochet-group.service to make it work, specifically the name of the tor user"
+echo -e "Installed!\nEdit /etc/ricochet-group/config.yaml to get the config you desure, and then run:\n\n  $ sudo systemctl start ricochet-group\n\nto start ricochet-group, and:\n\n  $ sudo systemctl enable ricochet-group\n\nto have it start automatically at boot.\n"

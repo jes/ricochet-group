@@ -3,7 +3,7 @@ Description=ricochet-group
 Requires=tor.service
 
 [Service]
-User=debian-tor
+User=ricochet-group
 ExecStart=/usr/local/bin/ricochet-group
 WorkingDirectory=/var/run/ricochet-group
 
