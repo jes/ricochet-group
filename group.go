@@ -41,9 +41,6 @@ func main() {
 	viper.AddConfigPath("/etc/ricochet-group/")
 
 	viper.SetDefault("welcomemsg", "*** welcome to ricochet group chat.")
-	viper.SetDefault("torcontrol", "127.0.0.1:9051") // or e.g. "/var/run/tor/control"
-	viper.SetDefault("torcontroltype", "tcp4")       // or e.g. "unix"
-	viper.SetDefault("torcontrolauthentication", "")
 	viper.SetDefault("allowedusers", []string{})
 	viper.SetDefault("admins", []string{})
 	viper.SetDefault("publicgroup", false)
@@ -87,9 +84,6 @@ func main() {
 	commands := InitCommands()
 
 	bot := new(ricochetbot.RicochetBot)
-	bot.TorControlAddress = viper.GetString("torcontrol")
-	bot.TorControlType = viper.GetString("torcontroltype")
-	bot.TorControlAuthentication = viper.GetString("torcontrolauthentication")
 	bot.PrivateKey = pk
 
 	bot.OnConnect = func(peer *ricochetbot.Peer) {
@@ -152,5 +146,10 @@ func main() {
 		}
 	}
 
+	err = bot.ManageTor(viper.GetString("datadir"))
+	if err != nil {
+		log.Fatalf("can't start tor: %v", err)
+	}
+	fmt.Println("Started tor, we're controlling it at " + bot.TorControlAddress)
 	bot.Run()
 }

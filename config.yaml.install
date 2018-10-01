@@ -14,17 +14,6 @@ publicgroup: true
 
 welcomemsg: "*** welcome to ricochet group chat."
 
-# specify how to connect to tor's control socket like so:
-#   torcontrol: 127.0.0.1:9051
-#   torcontroltype: tcp4
-# or:
-#   torcontrol: /var/run/tor/control
-#   torcontroltype: unix
-# and set the authentication string if applicable:
-#   torcontrolauthentication: foo
-#
-# the default configuration is to assume 127.0.0.1:9051 and tcp4
-
 # directory that runtime data is to be read from and written to
 # this contains private key and peer lists
 datadir: "/var/run/ricochet-group"
