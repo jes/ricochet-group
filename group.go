@@ -9,6 +9,7 @@ import (
 	"log"
 	"strings"
 	"sync"
+	"time"
 )
 
 var nickLock sync.Mutex
@@ -151,5 +152,15 @@ func main() {
 		log.Fatalf("can't start tor: %v", err)
 	}
 	fmt.Println("Started tor, we're controlling it at " + bot.TorControlAddress)
+
+	go func() {
+		// TODO: instead of sleeping 20 seconds, we should have a callback when tor is ready
+		time.Sleep(20 * time.Second)
+		for _, onion := range GetList("peers") {
+			fmt.Println("Trying to connect out to", onion)
+			go bot.Connect(onion)
+		}
+	}()
+
 	bot.Run()
 }

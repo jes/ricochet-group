@@ -17,7 +17,6 @@ Current status
 Basic functionality is working.
 
 Still required for "launch" (i.e. convenient to install and run a public group):
- - automatically connect to known peers at startup
  - easy first-run experience & documentation about how to set it up
  - kicking/banning
  - why doesn't the instance on my laptop work?
