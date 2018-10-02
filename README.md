@@ -38,6 +38,7 @@ Nice to have later:
  - check if the stuff that rejects non-allowed users is actually robust (I have doubts)
  - a message to go along with kicks and bans (and store the ban messages in the ban list to display in /bans)
  - more concise & useful log output
+ - suppress welcome message when we initiated the connection? otherwise we just spam everyone whenever the bot restarts
 
 admin commands still to implement:
 
