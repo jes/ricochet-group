@@ -37,6 +37,7 @@ Nice to have later:
  - unit tests
  - check if the stuff that rejects non-allowed users is actually robust (I have doubts)
  - a message to go along with kicks and bans (and store the ban messages in the ban list to display in /bans)
+ - more concise & useful log output
 
 admin commands still to implement:
 
