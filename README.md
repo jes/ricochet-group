@@ -68,6 +68,11 @@ Clone the repo:
 
     $ git clone https://github.com/jes/ricochet-group
 
+If you don't already have go and tor, you'll need to install them.
+
+    $ sudo apt install golang-go tor # on Ubuntu
+    $ sudo yum install golang tor    # on CentOS
+
 Fetch the dependencies:
 
     $ go get -d
@@ -84,7 +89,7 @@ Edit `config.yaml` to taste.
 
 ### Permanent installation
 
-The included script `install.sh` should install `ricochet-group` on Ubuntu systems and hopefully others.
+The included script `install.sh` should install `ricochet-group` on Ubuntu and CentOS systems, and hopefully others.
 
 Having installed `ricochet-group` with `install.sh`, you should edit the config in `/etc/ricochet-group/config.yaml`
 and then start it with systemd:

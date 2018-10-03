@@ -28,7 +28,7 @@ fi
 if [ -e /etc/ricochet-group/config.yaml ]; then
     cmp --quiet config.yaml.install /etc/ricochet-group/config.yaml || echo -e "\n\n*** Your installed config file is different from the default!\n*** You might want to examine changes between /etc/ricochet-group/config.yaml and ./config.yaml.install and decide whether you want to edit your config.\n\n------------------\n"
 else
-    cp config.yaml.install /etc/ricochet-group/
+    cp config.yaml.install /etc/ricochet-group/config.yaml
 fi
 
 echo -e "Installed!\nEdit /etc/ricochet-group/config.yaml to get the config you desure, and then run:\n\n  $ sudo systemctl start ricochet-group\n\nto start ricochet-group, and:\n\n  $ sudo systemctl enable ricochet-group\n\nto have it start automatically at boot.\n"
