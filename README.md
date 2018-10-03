@@ -17,7 +17,6 @@ Current status
 Basic functionality is working.
 
 Still required for "launch" (i.e. convenient to install and run a public group):
- - easy first-run experience & documentation about how to set it up
  - kicking/banning
 
 Nice to have later:
@@ -62,8 +61,6 @@ Installation
 
 ### Basic usage
 
-As a minimum, you will need to first install `tor` and `go`.
-
 Clone the repo:
 
     $ git clone https://github.com/jes/ricochet-group
@@ -85,11 +82,17 @@ After that, you can get started by running:
 
     $ ./ricochet-group
 
-Edit `config.yaml` to taste.
+The first line will tell you the Ricochet ID of your group chat:
+
+    ricochet-group coming up at ricochet:3yah8ol5a6ub3rto ...
+
+Edit `config.yaml` to customise the configuration.
 
 ### Permanent installation
 
 The included script `install.sh` should install `ricochet-group` on Ubuntu and CentOS systems, and hopefully others.
+
+    $ sudo ./install.sh
 
 Having installed `ricochet-group` with `install.sh`, you should edit the config in `/etc/ricochet-group/config.yaml`
 and then start it with systemd:
@@ -110,6 +113,8 @@ exits immediately are not shown by `journalctl -u ricochet-group`, but you shoul
 
 You can then connect to the group chat and verify that it works. It might take 30 seconds or more for the hidden
 service to become connectable, so don't be alarmed if it doesn't work immediately.
+
+You can edit the configuration in `/etc/ricochet-group/config.yaml`. Remember to restart `ricochetgroup` whenever you change it.
 
 Once you're satisfied, you can make it start at boot:
 
