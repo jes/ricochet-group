@@ -12,6 +12,10 @@ publicgroup: true
 #    - aaaaaaaaaaaaaaaa
 #    - bbbbbbbbbbbbbbbb
 
+# you can permanently ban users by listing their ricochet ids:
+#   bans:
+#    - cccccccccccccccc
+
 welcomemsg: "*** welcome to ricochet group chat."
 
 # directory that runtime data is to be read from and written to

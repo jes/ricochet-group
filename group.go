@@ -29,6 +29,10 @@ func IsAdmin(onion string) bool {
 	return IsInList(onion, viper.GetStringSlice("admins")) || IsInList(onion, GetList("admins"))
 }
 
+func IsBanned(onion string) bool {
+	return IsInList(onion, viper.GetStringSlice("bans")) || IsInList(onion, GetList("bans"))
+}
+
 func IsAllowedUser(onion string) bool {
 	return IsInList(onion, viper.GetStringSlice("allowedusers")) || IsInList(onion, GetList("allowedusers"))
 }
@@ -44,6 +48,7 @@ func main() {
 	viper.SetDefault("welcomemsg", "*** welcome to ricochet group chat.")
 	viper.SetDefault("allowedusers", []string{})
 	viper.SetDefault("admins", []string{})
+	viper.SetDefault("bans", []string{})
 	viper.SetDefault("publicgroup", false)
 	viper.SetDefault("datadir", ".")
 
@@ -93,10 +98,10 @@ func main() {
 	bot.OnNewPeer = func(peer *ricochetbot.Peer) bool {
 		fmt.Println(peer.Onion, "connected to us")
 		SendToAll(bot, peer, "*** "+peer.Onion+" has connected.")
-		if viper.GetBool("publicgroup") == true || IsAllowedUser(peer.Onion) {
+		if !IsBanned(peer.Onion) && (viper.GetBool("publicgroup") == true || IsAllowedUser(peer.Onion)) {
 			return true
 		} else {
-			fmt.Println(peer.Onion + " not in allowed users list! Refusing connection")
+			fmt.Println(peer.Onion + " not allowed! Refusing connection")
 			return false
 		}
 	}
@@ -157,6 +162,12 @@ func main() {
 		// TODO: instead of sleeping 20 seconds, we should have a callback when tor is ready
 		time.Sleep(20 * time.Second)
 		for _, onion := range GetList("peers") {
+			// don't connect out to banned users
+			if IsBanned(onion) {
+				RemoveFromList("peers", onion)
+				continue
+			}
+
 			fmt.Println("Trying to connect out to", onion)
 			go bot.Connect(onion)
 		}

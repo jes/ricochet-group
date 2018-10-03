@@ -13,6 +13,28 @@ var IsAllowableNick = regexp.MustCompile(`^[a-zA-Z0-9-_]+$`).MatchString
 func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 	m := make(map[string]func(*ricochetbot.Peer, string, []string))
 
+	m["/ban"] = func(peer *ricochetbot.Peer, message string, words []string) {
+		if !IsAdmin(peer.Onion) {
+			peer.SendMessage("Sorry, only admins can ban.")
+			return
+		}
+
+		if len(words) != 2 {
+			peer.SendMessage("usage: /ban foo")
+			return
+		}
+
+		ban := peer.Bot.LookupPeerByHostname(words[1])
+		if ban == nil {
+			peer.SendMessage("No such peer: " + words[1])
+			return
+		}
+
+		AddToList("bans", words[1])
+		ban.Disconnect()
+		SendToAll(peer.Bot, nil, "*** "+words[1]+" was banned by "+peer.Onion)
+	}
+
 	m["/help"] = func(peer *ricochetbot.Peer, message string, words []string) {
 		peer.SendMessage(
 			`Commands available:
