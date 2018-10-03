@@ -60,8 +60,8 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 			delete(nick2Onion, oldnick)
 		}
 
-		if len(words[1]) > 16 {
-			peer.SendMessage("Maximum of 16 characters for a nick")
+		if len(words[1]) > 15 {
+			peer.SendMessage("Maximum of 15 characters for a nick")
 			return
 		}
 		if !IsAllowableNick(words[1]) {
