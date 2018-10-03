@@ -24,6 +24,7 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 			return
 		}
 
+		// TODO: lookup by nick if a nick is given
 		ban := peer.Bot.LookupPeerByHostname(words[1])
 		if ban == nil {
 			peer.SendMessage("No such peer: " + words[1])
@@ -33,6 +34,14 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 		AddToList("bans", words[1])
 		ban.Disconnect()
 		SendToAll(peer.Bot, nil, "*** "+words[1]+" was banned by "+peer.Onion)
+	}
+
+	m["/bans"] = func(peer *ricochetbot.Peer, message string, words []string) {
+		bans := append(viper.GetStringSlice("bans"), GetList("bans")...)
+		sort.Slice(bans, func(a int, b int) bool {
+			return strings.Compare(bans[a], bans[b]) < 0
+		})
+		peer.SendMessage("Banned users:\n" + strings.Join(bans, "\n"))
 	}
 
 	m["/help"] = func(peer *ricochetbot.Peer, message string, words []string) {
@@ -51,8 +60,10 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 				`Admin commands:
 
   /ban foo - Ban the given ricochet id or nickname
+  /bans - List banned ricochet ids
   /invite id - Invite the given ricochet id to the group
   /kick foo - Kick the given ricochet id or nickname
+  /unban id - Unban the given ricochet id
   /welcome [new message] - Set the welcome message
 `)
 		}
@@ -69,6 +80,7 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 			return
 		}
 
+		// TODO: lookup by nick if a nick is given
 		kick := peer.Bot.LookupPeerByHostname(words[1])
 		if kick == nil {
 			peer.SendMessage("No such peer: " + words[1])
@@ -77,6 +89,25 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 
 		kick.Disconnect()
 		SendToAll(peer.Bot, nil, "*** "+words[1]+" was kicked by "+peer.Onion)
+	}
+
+	m["/unban"] = func(peer *ricochetbot.Peer, message string, words []string) {
+		if !IsAdmin(peer.Onion) {
+			peer.SendMessage("Sorry, only admins can unban.")
+			return
+		}
+
+		if len(words) != 2 {
+			peer.SendMessage("usage: /unban foo")
+			return
+		}
+
+		if IsBanned(words[1]) {
+			RemoveFromList("bans", words[1])
+			SendToAll(peer.Bot, nil, "*** "+words[1]+" was unbanned by "+peer.Onion)
+		} else {
+			peer.SendMessage(words[1] + " is not banned")
+		}
 	}
 
 	m["/nick"] = func(peer *ricochetbot.Peer, message string, words []string) {
