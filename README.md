@@ -14,43 +14,13 @@ It hasn't been security-tested and is only a hobby project. Rely on it at your o
 Current status
 --------------
 
-Basic functionality is working.
+Public and private group chats work.
 
-Nice to have later:
- - "semipublic" groups - anybody can try to connect, but connections must be approved by either admins or other users before they are allowed in the group
- - password-protected private groups
-   - getting the password correct should add you to allowedusers
-   - /invite should also add an id to allowedusers
- - different welcome message based on whether it's a new peer or not? (i.e. to tell them to set a nick with /nick)
- - write to stderr some indication of when the bot is ready to connect to, instead of just waiting?
- - stop replies to commands from appearing in the GUI *before* the commands themselves
-   - not sure why this is happening, and fudging the message timestamps doesn't fix it
- - reload config on sighup
-   - make sure to disconnect from non-allowed users, banned users, etc.
- - accept config from either yaml file or command line (think viper has this built-in)
- - convenient way to run multiple group chats on one machine (probably just a matter of configuration)
- - unit tests
- - check if the stuff that rejects non-allowed users is actually robust (I have doubts)
- - a message to go along with kicks and bans (and store the ban messages in the ban list to display in /bans)
- - more concise & useful log output
- - suppress welcome message when we initiated the connection? otherwise we just spam everyone whenever the bot restarts
- - what happens if there are 2 peers with the same onion address?
-   - particularly, we need to make sure to disconnect all of them when kicking or banning!
+There are certainly bugs.
+It is certainly possible to evade kicking and banning.
+It is probably possible to connect to a private chat without permission.
 
-admin commands still to implement:
-
-    /invite $id   - invite given ricochet id to the chat (i.e. group chat should connect to that id and send a contactrequest)
-    /welcome $msg - update the welcome message
-    /admins       - list admins
-    /allowedusers - list allowed users
-    /bans         - list banned users
-
-Persistent state we still need to store:
- - welcome message
- - list of allowedusers
- - list of admins
- - list of banned users
- - onion2Nick
+See file `TODO` for things that still need to be done.
 
 Installation
 ------------
