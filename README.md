@@ -22,6 +22,7 @@ Still required for "launch" (i.e. convenient to install and run a public group):
  - remove error about "no install location outside GOPATH" when running "go get"
 
 Nice to have later:
+ - "semipublic" groups - anybody can try to connect, but connections must be approved by either admins or other users before they are allowed in the group
  - password-protected private groups
    - getting the password correct should add you to allowedusers
    - /invite should also add an id to allowedusers
