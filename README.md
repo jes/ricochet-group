@@ -19,7 +19,6 @@ Basic functionality is working.
 Still required for "launch" (i.e. convenient to install and run a public group):
  - easy first-run experience & documentation about how to set it up
  - kicking/banning
- - why doesn't the instance on my laptop work?
  - remove error about "no install location outside GOPATH" when running "go get"
 
 Nice to have later:
