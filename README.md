@@ -19,7 +19,6 @@ Basic functionality is working.
 Still required for "launch" (i.e. convenient to install and run a public group):
  - easy first-run experience & documentation about how to set it up
  - kicking/banning
- - remove error about "no install location outside GOPATH" when running "go get"
 
 Nice to have later:
  - "semipublic" groups - anybody can try to connect, but connections must be approved by either admins or other users before they are allowed in the group
@@ -67,7 +66,7 @@ As a minimum, you will need to first install `tor` and `go`.
 
 Fetch the ricochet-group dependencies:
 
-    $ go get
+    $ go get -d
 
 (This may take a while and produce no output). Build ricochet-group:
 
