@@ -28,12 +28,33 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 			peer.SendMessage(
 				`Admin commands:
 
-  /invite id - Invite the given ricochet id to the group
-  /welcome [new message] - Set the welcome message
-  /kick foo - Kick the given ricochet id or nickname
   /ban foo - Ban the given ricochet id or nickname
+  /invite id - Invite the given ricochet id to the group
+  /kick foo - Kick the given ricochet id or nickname
+  /welcome [new message] - Set the welcome message
 `)
 		}
+	}
+
+	m["/kick"] = func(peer *ricochetbot.Peer, message string, words []string) {
+		if !IsAdmin(peer.Onion) {
+			peer.SendMessage("Sorry, only admins can kick.")
+			return
+		}
+
+		if len(words) != 2 {
+			peer.SendMessage("usage: /kick foo")
+			return
+		}
+
+		kick := peer.Bot.LookupPeerByHostname(words[1])
+		if kick == nil {
+			peer.SendMessage("No such peer: " + words[1])
+			return
+		}
+
+		kick.Disconnect()
+		SendToAll(peer.Bot, nil, "*** "+words[1]+" was kicked by "+peer.Onion)
 	}
 
 	m["/nick"] = func(peer *ricochetbot.Peer, message string, words []string) {
