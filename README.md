@@ -64,7 +64,11 @@ Installation
 
 As a minimum, you will need to first install `tor` and `go`.
 
-Fetch the ricochet-group dependencies:
+Clone the repo:
+
+    $ git clone https://github.com/jes/ricochet-group
+
+Fetch the dependencies:
 
     $ go get -d
 
