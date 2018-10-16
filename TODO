@@ -27,6 +27,4 @@ admin commands still to implement:
 
 Persistent state we still need to store:
  - welcome message
- - list of allowedusers
- - list of admins
  - onion2Nick
