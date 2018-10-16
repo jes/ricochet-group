@@ -84,8 +84,11 @@ func main() {
 	}
 	fmt.Println("ricochet-group coming up at ricochet:" + onion + " ...")
 
-	onion2Nick = make(map[string]string)
+	onion2Nick = GetMap("nicks")
 	nick2Onion = make(map[string]string)
+	for key, val := range onion2Nick {
+		nick2Onion[val] = key
+	}
 
 	commands := InitCommands()
 
@@ -97,9 +100,6 @@ func main() {
 	}
 	bot.OnNewPeer = func(peer *ricochetbot.Peer) bool {
 		fmt.Println(peer.Onion, "connected to us")
-		if !IsInList(peer.Onion, GetList("peers")) {
-			SendToAll(bot, peer, "*** "+peer.Onion+" has connected.")
-		}
 		if !IsBanned(peer.Onion) && (viper.GetBool("publicgroup") == true || IsAllowedUser(peer.Onion)) {
 			return true
 		} else {
@@ -111,6 +111,7 @@ func main() {
 		fmt.Println(peer.Onion, "ready to chat")
 		if !IsInList(peer.Onion, GetList("peers")) {
 			peer.SendMessage(viper.GetString("welcomemsg"))
+			SendToAll(bot, peer, "*** "+peer.Onion+" has joined the group.")
 		}
 		AddToList("peers", peer.Onion)
 	}

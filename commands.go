@@ -31,6 +31,7 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 			return
 		}
 
+		RemoveFromMap("nicks", ban.Onion)
 		AddToList("bans", words[1])
 		ban.Disconnect()
 		SendToAll(peer.Bot, nil, "*** "+words[1]+" was banned by "+peer.Onion)
@@ -144,6 +145,7 @@ func InitCommands() map[string]func(*ricochetbot.Peer, string, []string) {
 		}
 		onion2Nick[peer.Onion] = words[1]
 		nick2Onion[words[1]] = peer.Onion
+		AddToMap("nicks", peer.Onion, words[1])
 		SendToAll(peer.Bot, nil, "*** "+peer.Onion+" is now known as "+words[1])
 	}
 

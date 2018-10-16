@@ -28,7 +28,6 @@ func GetList(name string) []string {
 	return _unsafe_GetList(name)
 }
 
-// XXX: this function doesn't use the lock, so should only be called by functions that do
 func _unsafe_GetList(name string) []string {
 	bytes, err := ioutil.ReadFile(ListFilename(name))
 	if err != nil {
@@ -47,7 +46,6 @@ func ListFilename(name string) string {
 	return viper.GetString("datadir") + "/" + name + ".list"
 }
 
-// XXX: this function doesn't use the lock, so should only be called by functions that do
 func _unsafe_WriteList(name string, list []string) {
 	filename := ListFilename(name)
 	contents := strings.Join(list, "\n")
@@ -58,7 +56,7 @@ func _unsafe_WriteList(name string, list []string) {
 
 	err := ioutil.WriteFile(filename, []byte(contents), 0644)
 	if err != nil {
-		fmt.Printf("error writing to %s: %v", name, err)
+		fmt.Printf("error writing to %s: %v", filename, err)
 	}
 }
 
