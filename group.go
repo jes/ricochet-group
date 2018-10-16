@@ -97,7 +97,9 @@ func main() {
 	}
 	bot.OnNewPeer = func(peer *ricochetbot.Peer) bool {
 		fmt.Println(peer.Onion, "connected to us")
-		SendToAll(bot, peer, "*** "+peer.Onion+" has connected.")
+		if !IsInList(peer.Onion, GetList("peers")) {
+			SendToAll(bot, peer, "*** "+peer.Onion+" has connected.")
+		}
 		if !IsBanned(peer.Onion) && (viper.GetBool("publicgroup") == true || IsAllowedUser(peer.Onion)) {
 			return true
 		} else {
@@ -107,7 +109,9 @@ func main() {
 	}
 	bot.OnReadyToChat = func(peer *ricochetbot.Peer) {
 		fmt.Println(peer.Onion, "ready to chat")
-		peer.SendMessage(viper.GetString("welcomemsg"))
+		if !IsInList(peer.Onion, GetList("peers")) {
+			peer.SendMessage(viper.GetString("welcomemsg"))
+		}
 		AddToList("peers", peer.Onion)
 	}
 	bot.OnMessage = func(peer *ricochetbot.Peer, message string) {
@@ -140,8 +144,6 @@ func main() {
 	}
 	bot.OnDisconnect = func(peer *ricochetbot.Peer) {
 		fmt.Println(peer.Onion, "disconnected")
-		SendToAll(bot, peer, "*** "+peer.Onion+" has disconnected.")
-		RemoveFromList("peers", peer.Onion)
 
 		nickLock.Lock()
 		defer nickLock.Unlock()
