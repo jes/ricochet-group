@@ -2,7 +2,6 @@
  - password-protected private groups
    - getting the password correct should add you to allowedusers
    - /invite should also add an id to allowedusers
- - different welcome message based on whether it's a new peer or not? (i.e. to tell them to set a nick with /nick)
  - write to stderr some indication of when the bot is ready to connect to, instead of just waiting?
  - stop replies to commands from appearing in the GUI *before* the commands themselves
    - not sure why this is happening, and fudging the message timestamps doesn't fix it
@@ -14,7 +13,6 @@
  - check if the stuff that rejects non-allowed users is actually robust (I have doubts)
  - a message to go along with kicks and bans (and store the ban messages in the ban list to display in /bans)
  - more concise & useful log output
- - suppress welcome message when we initiated the connection? otherwise we just spam everyone whenever the bot restarts
  - what happens if there are 2 peers with the same onion address?
    - particularly, we need to make sure to disconnect all of them when kicking or banning!
 
@@ -27,4 +25,3 @@ admin commands still to implement:
 
 Persistent state we still need to store:
  - welcome message
- - onion2Nick
