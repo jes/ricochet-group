@@ -110,7 +110,7 @@ a private chat, so you rely on it at your own risk.
 Upgrades
 --------
 
-If there is a new version available, and you want to upgrade your running `ricochet-group` instance.
+If there is a new version available, and you want to upgrade your running `ricochet-group` instance:
 
 First update the git repo, and fetch any possible updates to the dependencies, and build the new version of the code:
 
