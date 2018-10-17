@@ -145,14 +145,6 @@ func main() {
 	}
 	bot.OnDisconnect = func(peer *ricochetbot.Peer) {
 		fmt.Println(peer.Onion, "disconnected")
-
-		nickLock.Lock()
-		defer nickLock.Unlock()
-		nick, exists := onion2Nick[peer.Onion]
-		if exists {
-			delete(onion2Nick, peer.Onion)
-			delete(nick2Onion, nick)
-		}
 	}
 
 	err = bot.ManageTor(viper.GetString("datadir"))
