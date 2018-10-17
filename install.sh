@@ -31,4 +31,4 @@ else
     cp config.yaml.install /etc/ricochet-group/config.yaml
 fi
 
-echo -e "Installed!\nEdit /etc/ricochet-group/config.yaml to get the config you desure, and then run:\n\n  $ sudo systemctl start ricochet-group\n\nto start ricochet-group, and:\n\n  $ sudo systemctl enable ricochet-group\n\nto have it start automatically at boot.\n"
+echo -e "Installed!\nEdit /etc/ricochet-group/config.yaml to get the config you desire, and then run:\n\n  $ sudo systemctl start ricochet-group\n\nto start ricochet-group, and:\n\n  $ sudo systemctl enable ricochet-group\n\nto have it start automatically at boot.\n"
