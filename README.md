@@ -112,9 +112,10 @@ Upgrades
 
 If there is a new version available, and you want to upgrade your running `ricochet-group` instance.
 
-First update the git repo and build the new version of the code:
+First update the git repo, and fetch any possible updates to the dependencies, and build the new version of the code:
 
     $ git pull
+    $ go get -d -u github.com/jes/ricochetbot github.com/jes/go-ricochet
     $ go build
 
 Now you'll have to stop the running instance:
