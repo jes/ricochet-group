@@ -147,7 +147,7 @@ func main() {
 		fmt.Println(peer.Onion, "disconnected")
 	}
 
-	err = bot.ManageTor(viper.GetString("datadir"))
+	err = bot.ManageTor(viper.GetString("datadir") + "/tor")
 	if err != nil {
 		log.Fatalf("can't start tor: %v", err)
 	}
