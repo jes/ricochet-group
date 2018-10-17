@@ -11,6 +11,8 @@ channel over the Ricochet protocol.
 
 It hasn't been security-tested and is only a hobby project. Rely on it at your own risk.
 
+To try it out, come and join the "Fans of Ricochet" group chat at **ricochet:7kcnmmzhfo22unr2**
+
 Current status
 --------------
 
@@ -104,6 +106,32 @@ If you want your group chat to use a specific ricochet id (e.g. a vanity address
 
 Private groups do appear to work, but I can't warrant that there aren't bugs that would allow non-allowed users to read
 a private chat, so you rely on it at your own risk.
+
+Upgrades
+--------
+
+If there is a new version available, and you want to upgrade your running `ricochet-group` instance.
+
+First update the git repo and build the new version of the code:
+
+    $ git pull
+    $ go build
+
+Now you'll have to stop the running instance:
+
+    $ sudo systemctl stop ricochet-group
+
+Run the install script:
+
+    $ sudo ./install.sh
+
+(If you edited the config file, you'll see some messages about that. You can most likely ignore these, but if
+`ricochet-group` fails to
+start, you might want to diff your config with the latest sample config, to see if there are any new settings that are required).
+
+And restart your instance:
+
+    $ sudo systemctl start ricochet-group
 
 Contact me
 ----------
