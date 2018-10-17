@@ -3,8 +3,6 @@
    - getting the password correct should add you to allowedusers
    - /invite should also add an id to allowedusers
  - write to stderr some indication of when the bot is ready to connect to, instead of just waiting?
- - stop replies to commands from appearing in the GUI *before* the commands themselves
-   - not sure why this is happening, and fudging the message timestamps doesn't fix it
  - reload config on sighup
    - make sure to disconnect from non-allowed users, banned users, etc.
  - accept config from either yaml file or command line (think viper has this built-in)

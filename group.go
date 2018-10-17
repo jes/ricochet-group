@@ -110,8 +110,8 @@ func main() {
 	bot.OnReadyToChat = func(peer *ricochetbot.Peer) {
 		fmt.Println(peer.Onion, "ready to chat")
 		if !IsInList(peer.Onion, GetList("peers")) {
-			peer.SendMessage(viper.GetString("welcomemsg"))
-			SendToAll(bot, peer, "*** "+peer.Onion+" has joined the group.")
+			go peer.SendMessage(viper.GetString("welcomemsg"))
+			go SendToAll(bot, peer, "*** "+peer.Onion+" has joined the group.")
 		}
 		AddToList("peers", peer.Onion)
 	}
@@ -120,9 +120,9 @@ func main() {
 			words := strings.Fields(message)
 			cmd, exists := commands[words[0]]
 			if exists {
-				cmd(peer, message, words)
+				go cmd(peer, message, words)
 			} else {
-				peer.SendMessage("*** unrecognised command: " + words[0])
+				go peer.SendMessage("*** unrecognised command: " + words[0])
 			}
 		} else {
 			name := peer.Onion
@@ -131,7 +131,7 @@ func main() {
 				name = nick
 			}
 			message = "<" + name + "> " + message
-			SendToAll(bot, peer, message)
+			go SendToAll(bot, peer, message)
 		}
 	}
 	bot.OnContactRequest = func(peer *ricochetbot.Peer, name string, desc string) bool {
