@@ -154,17 +154,27 @@ func main() {
 	fmt.Println("Started tor, we're controlling it at " + bot.TorControlAddress)
 
 	go func() {
-		// TODO: instead of sleeping 20 seconds, we should have a callback when tor is ready
-		time.Sleep(20 * time.Second)
-		for _, onion := range GetList("peers") {
-			// don't connect out to banned users
-			if IsBanned(onion) {
-				RemoveFromList("peers", onion)
-				continue
+		// loop forever, periodically trying to reconnect to any known peers that we're not currently
+		// connected to
+		for {
+			// TODO: instead of sleeping 20 seconds, we should have a callback when tor is ready
+			// to send out the initial round of connections
+			time.Sleep(20 * time.Second)
+			for _, onion := range GetList("peers") {
+				// don't connect out to banned users
+				if IsBanned(onion) {
+					RemoveFromList("peers", onion)
+					continue
+				}
+
+				fmt.Println("Trying to connect out to", onion)
+				if bot.LookupPeerByHostname(onion) == nil {
+					go bot.Connect(onion)
+				}
 			}
 
-			fmt.Println("Trying to connect out to", onion)
-			go bot.Connect(onion)
+			// sleep 5 minutes before trying again
+			time.Sleep(300 * time.Second)
 		}
 	}()
 
