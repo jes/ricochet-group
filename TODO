@@ -12,6 +12,7 @@
  - more concise & useful log output
  - what happens if there are 2 peers with the same onion address?
    - particularly, we need to make sure to disconnect all of them when kicking or banning!
+ - some way to notify people when other people rejoin (e.g. person A connects and then disconnects, person B connects and then disconnects, then person A connects again - person B has no idea that person is in the chat or has ever been in the chat)
 
 admin commands still to implement:
 
