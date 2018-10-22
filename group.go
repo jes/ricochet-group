@@ -169,7 +169,7 @@ func main() {
 
 				fmt.Println("Trying to connect out to", onion)
 				if bot.LookupPeerByHostname(onion) == nil {
-					go bot.Connect(onion)
+					go bot.Connect(onion, "Connection from a ricochet-group chat.")
 				}
 			}
 
