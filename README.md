@@ -100,7 +100,7 @@ Configuration
 All of the available configuration options are either used or described in the example config file.
 
 If you want your group chat to use a specific ricochet id (e.g. a vanity address), you can copy the corresponding private key into
-`/var/run/ricochet-group/private_key` instead of using the auto-generated key.
+`/var/lib/ricochet-group/private_key` instead of using the auto-generated key.
 
 ### Private groups
 

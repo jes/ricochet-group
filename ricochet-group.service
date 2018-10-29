@@ -5,7 +5,7 @@ Requires=tor.service
 [Service]
 User=ricochet-group
 ExecStart=/usr/local/bin/ricochet-group
-WorkingDirectory=/var/run/ricochet-group
+WorkingDirectory=/var/lib/ricochet-group
 
 [Install]
 WantedBy=multi-user.target

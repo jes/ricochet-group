@@ -9,13 +9,13 @@ if [ ! -e ricochet-group ]; then
 fi
 
 # create ricochet-group user if there isn't one already
-grep -q ^ricochet-group: /etc/passwd || useradd --system --home-dir /var/run/ricochet-group/ ricochet-group
+grep -q ^ricochet-group: /etc/passwd || useradd --system --home-dir /var/lib/ricochet-group/ ricochet-group
 
 # create files and directories
 cp ricochet-group /usr/local/bin/
 mkdir -p /etc/ricochet-group/
-mkdir -p /var/run/ricochet-group/
-chown ricochet-group /var/run/ricochet-group/ || echo -e "\n\n*** You'll need to change the owner of /var/run/ricochet-group to whatever user you'll be running ricochet-group as (ricochet-group will need access to the tor control cookie)\n\n------------------\n"
+mkdir -p /var/lib/ricochet-group/
+chown ricochet-group /var/lib/ricochet-group/ || echo -e "\n\n*** You'll need to change the owner of /var/lib/ricochet-group to whatever user you'll be running ricochet-group as (ricochet-group will need access to the tor control cookie)\n\n------------------\n"
 
 # don't overwrite handwritten systemd unit
 if [ -e /etc/systemd/system/ricochet-group.service ]; then
