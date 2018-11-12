@@ -12,7 +12,8 @@ fi
 grep -q ^ricochet-group: /etc/passwd || useradd --system --home-dir /var/lib/ricochet-group/ ricochet-group
 
 # create files and directories
-cp ricochet-group /usr/local/bin/
+cp ricochet-group /usr/local/bin/ricochet-group.new
+mv /usr/local/bin/ricochet-group.new /usr/local/bin/ricochet-group
 mkdir -p /etc/ricochet-group/
 mkdir -p /var/lib/ricochet-group/
 chown ricochet-group /var/lib/ricochet-group/ || echo -e "\n\n*** You'll need to change the owner of /var/lib/ricochet-group to whatever user you'll be running ricochet-group as (ricochet-group will need access to the tor control cookie)\n\n------------------\n"

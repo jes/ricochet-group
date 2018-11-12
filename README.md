@@ -118,10 +118,6 @@ First update the git repo, and fetch any possible updates to the dependencies, a
     $ go get -d -u github.com/jes/ricochetbot github.com/jes/go-ricochet
     $ go build
 
-Now you'll have to stop the running instance:
-
-    $ sudo systemctl stop ricochet-group
-
 Run the install script:
 
     $ sudo ./install.sh
@@ -132,7 +128,7 @@ start, you might want to diff your config with the latest sample config, to see 
 
 And restart your instance:
 
-    $ sudo systemctl start ricochet-group
+    $ sudo systemctl restart ricochet-group
 
 Contact me
 ----------
