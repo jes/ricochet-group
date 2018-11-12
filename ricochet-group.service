@@ -1,6 +1,5 @@
 [Unit]
 Description=ricochet-group
-Requires=tor.service
 
 [Service]
 User=ricochet-group
